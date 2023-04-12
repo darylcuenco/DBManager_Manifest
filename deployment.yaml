@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: dbmanager-k8s
+  name: dbmanager-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dbmanager-k8s
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: dbmanager-k8s
+    spec:
+      containers:
+        - image: darylcuenco/dbmanager-k8s:0
+          name: dbmanager-k8s
+          resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dbmanager-k8s
+  labels:
+    app: dbmanager-k8s
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3434
+  selector:
+    app: dbmanager-k8s
